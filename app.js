@@ -1,0 +1,35 @@
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
+import notFound from "./middleware/not-found.js";
+import errorHandler from "./middleware/error-handler.js";
+import connectDB from "./db/connect.js";
+dotenv.config();
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("<h1>Store API</h1><a href='/api/v1/products'>Products Route</a>");
+});
+app.use("/api/v1/products", (req, res) => {
+  res.send("Products route");
+});
+// Products route
+app.use(notFound);
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 3000;
+const start = async () => {
+  try {
+    await connectDB("mongodb://127.0.0.1:27017/Store-api");
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
+};
+
+start();
