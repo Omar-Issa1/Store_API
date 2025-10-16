@@ -66,7 +66,11 @@ const getAllProducts = async (req, res) => {
   const products = await result.lean();
 
   if (products.length === 0) {
-    return res.status(200).json({ msg: "No products found", nbHits: 0 });
+    res.status(200).json({
+      products,
+      nbHits: products.length,
+      msg: products.length ? undefined : "No products found",
+    });
   }
   res.status(200).json({ products, nbHits: products.length });
 };
