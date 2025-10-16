@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import express from "express";
-import mongoose from "mongoose";
 import notFound from "./middleware/not-found.js";
 import errorHandler from "./middleware/error-handler.js";
 import connectDB from "./db/connect.js";
@@ -16,7 +15,7 @@ app.use(express.json());
 // Routes
 
 app.get("/", (req, res) => {
-  res.send("<h1>Store API</h1><a href='/api/v1/products'>Products Route</a>");
+  res.json({ message: "Welcome to Store API", routes: ["/api/v1/products"] });
 });
 app.use("/api/v1/products", productsRouter);
 // Products route

@@ -32,7 +32,7 @@ const getAllProducts = async (req, res) => {
       (match) => `-${operatorMap[match]}-`
     );
     // "discount", "stock" for later use
-    const options = ["price", "rating", "discount", "stock"];
+    const options = ["price", "rating"];
 
     filters.split(",").forEach((item) => {
       const [field, operator, value] = item.split("-");
@@ -64,7 +64,7 @@ const getAllProducts = async (req, res) => {
   const products = await query.lean();
 
   if (products.length === 0) {
-    return res.status(200).json({
+    return res.status(404).json({
       products,
       nbHits: 0,
       msg: "No products found",
