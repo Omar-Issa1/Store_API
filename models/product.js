@@ -20,11 +20,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  // description: {
-  //   type: String,
-  //   required: [true, "Please provide a product description"],
-  //   maxlength: [500, "Product description cannot be more than 500 characters"],
-  // },
+
   createdAt: {
     type: Date,
     default: Date.now,
