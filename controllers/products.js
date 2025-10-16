@@ -44,34 +44,33 @@ const getAllProducts = async (req, res) => {
     });
     // console.log("numericFilters:", req.query.numericFilters);
   }
-  let result = Product.find(queryObject);
+  let query = Product.find(queryObject);
 
   if (sort) {
-    const sortList = sort.split(",").join(" ");
-    result = result.sort(sortList);
+    query = query.sort(sort.split(",").join(" "));
   } else {
-    result = result.sort("createdAt");
+    query = query.sort("createdAt");
   }
+
   if (fields) {
-    const fieldsList = fields.split(",").join(" ");
-    result = result.select(fieldsList);
+    query = query.select(fields.split(",").join(" "));
   }
 
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 10;
   const skip = (page - 1) * limit;
-  result = result.skip(skip).limit(limit);
-  // console.log(page, limit, skip);
+  query = query.skip(skip).limit(limit);
 
-  const products = await result.lean();
+  const products = await query.lean();
 
   if (products.length === 0) {
-    res.status(200).json({
+    return res.status(200).json({
       products,
-      nbHits: products.length,
-      msg: products.length ? undefined : "No products found",
+      nbHits: 0,
+      msg: "No products found",
     });
   }
+
   res.status(200).json({ products, nbHits: products.length });
 };
 
