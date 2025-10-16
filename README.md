@@ -165,4 +165,4 @@ Backend Developer & Node.js Enthusiast
 
 ## 🪪 License
 
-This project is licensed under the **MIT License**.
+This project is open source under the [MIT License](LICENSE).
